@@ -1,0 +1,15 @@
+.nav-area{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.links a{
+    text-decoration: none;
+    color: white;
+    margin: 10px;
+}
+
+.links a:hover{
+    color: #ccc;
+}

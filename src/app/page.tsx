@@ -20,12 +20,15 @@ import imoogiImage from '../../public/Projeto IMOOGI.png'
 import imoogiImageAncient from '../../public/projeto antigo imoogi.png'
 import portifolioImage from '../../public/portifolio-image.png'
 import { ProjectCard } from "@/components/projectCard";
+import { useState } from "react";
 
 
 
 
 
 export default function Home() {
+
+
   return (
     <MainLayout>
       <section className="menu" id="menu">
@@ -38,9 +41,9 @@ export default function Home() {
             e produtividade do seu negocio
           </p>
           <div className="contact-area">
-            <Link href=''><Image src={linkedinIcon} width={60} height={60} className="contact-icon" alt=""></Image></Link>
-            <Link href=''><Image src={whatsappIcon} width={60} height={60} className="contact-icon" alt=""></Image></Link>
-            <Link href=''><Image src={githubIcon} width={60} height={60} className="contact-icon" alt=""></Image></Link>
+            <Link href='https://www.linkedin.com/in/thiago-spadari-'><Image src={linkedinIcon} width={60} height={60} className="contact-icon" alt=""></Image></Link>
+            <Link href='https://api.whatsapp.com/send/?phone=11960599793&text&type=phone_number&app_absent=0'><Image src={whatsappIcon} width={60} height={60} className="contact-icon" alt=""></Image></Link>
+            <Link href='https://github.com/spadaritucks'><Image src={githubIcon} width={60} height={60} className="contact-icon" alt=""></Image></Link>
           </div>
         </div>
         <Image src={foto} className="dev-image" alt=""></Image>

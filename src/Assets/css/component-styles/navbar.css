@@ -10,6 +10,11 @@
     margin: 0;
 }
 
+.hamburguer-area{
+    display: none;
+}
+
+
 .links a{
     text-decoration: none;
     color: white;
@@ -18,4 +23,31 @@
 
 .links a:hover{
     color: #ccc;
+}
+
+@media (max-width:990px) {
+    .hamburguer-area{
+        display: block;
+    }
+
+    .links{
+        visibility: hidden;
+        opacity: 0;
+        position: fixed;
+        width: 100%;
+        background-color: #534b4b;
+        top: -90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s ease-in;
+    }
+
+    .links.open{
+        visibility: visible;
+        opacity: 1;
+        transition: 0.3s ease-in;
+        top: 90px;
+    }
 }

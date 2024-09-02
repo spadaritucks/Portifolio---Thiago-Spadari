@@ -140,6 +140,22 @@ h1{
         height: 100%;
     }
 
+    .project-container{
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    
+
+    
+}
+
+@media (max-width: 700px) {
+    .project-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
     
 }

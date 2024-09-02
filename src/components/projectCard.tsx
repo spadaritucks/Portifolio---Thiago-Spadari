@@ -28,7 +28,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ projectImage, technolo
             ))}
         </div>
         <h2 className="project-title">{title}</h2>
-        <h3 className="project-company">Empresa : {company}</h3>
+        <h3 className="project-company">Tipo de Projeto : {company}</h3>
         <p className="project-text">{description}</p>
 
         <div className='links-project'>

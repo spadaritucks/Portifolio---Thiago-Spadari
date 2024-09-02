@@ -1,0 +1,61 @@
+.project-card{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    width: 400px;
+    max-height: 100%;
+    background-color: #534b4b;
+    border-radius: 20px;
+    
+    
+}
+
+.project-image{
+    width:400px;
+    height: 200px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.project-tecnology{
+    display: flex;
+    padding: 0 10px;
+    margin-top: 5px;
+}
+
+.project-title{
+    padding: 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.project-text{
+    padding: 0 10px;
+    font-size: 14px;
+    text-align: justify;
+    margin: 5px;
+}
+
+.project-company{
+    padding: 0 10px;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.project-tech-icon{
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    
+   
+}
+
+.links{
+    display: flex;
+}
+
+.links-project a {
+    margin: 0;
+}

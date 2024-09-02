@@ -1,57 +1,146 @@
+h1{
+    font-size: 35px;
+}
+
 .menu{
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 60px;
+    min-height: 100vh;
 }
 
 .home-presentation{
     display: flex;
     flex-direction:column;
     align-items: left;
-    width: 50%;
+    justify-content: left;
     text-align: left;
-    margin: 80px;
+    margin: 40px;
 }
 
 .home-title{
-    font-size: 50px;
+    font-size: 80px;
+    margin: 0;
 }
 
 .home-text-presentation{
-    width: 400px;
-}
-
-.home-image{
-    width: 50%;
-}
-
-.circle{
-
-    border-radius: 100%;
-    width: 600px;
-    height: 600px;
-    background-color: rgba(255, 255, 255, 0.801);
+    max-width: 600px;
     
 }
 
-.contact-button{
-    padding: 10px 15px;
-    font-size: 30px;
-    background-color: rgb(108, 60, 228);
+.contact-icon{
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.contact-icon:hover{
+    transform: scale(110%);
+    transition: 0.3s ease-in-out;
+}
+
+.dev-image{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.sobre-mim-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.descricao-sobre-mim{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.tecnologias{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 35px;
+}
+
+.tech-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+}
+
+.tecnology-icon{
+    margin: 30px;
     border-radius: 15px;
-    width: 400px;
-    border: none;
     cursor: pointer;
+    width: 100px;
+    height: 100px;
+
 }
 
-.contact-button a{
-    text-decoration: none;
-    color: white;
+.tecnology-icon:hover{
+    transform: scale(110%);
+    transition: 0.3s ease-in-out;
 }
 
-.contact-button:hover{
-    background-color: rgb(149, 0, 255);
+.competencias{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 35px;
+    
+}
+
+.competencias-list li{
+   margin: 25px;
+   padding: 12px;
+   border-bottom: 1px rgb(255, 255, 255) solid;
+}
+
+.project-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.project-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 20px;
+
+}
+
+
+
+@media (max-width:990px) {
+
+    .menu, .home-presentation, .descricao-sobre-mim{
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 0;
+        text-align: center;
+        padding: 10px 20px;
+    }
+
+
+    .tech-container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dev-image{
+        max-width: 100%;
+        height: 100%;
+    }
+
+
+    
 }
 

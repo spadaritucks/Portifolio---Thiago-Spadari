@@ -120,6 +120,7 @@ h1{
 
 
 
+
 @media (max-width:990px) {
 
     .menu, .home-presentation, .descricao-sobre-mim{
@@ -130,6 +131,11 @@ h1{
         text-align: center;
         padding: 10px 20px;
     }
+
+    .home-presentation{
+        margin-top: 120px;
+    }
+   
 
 
     .tech-container{

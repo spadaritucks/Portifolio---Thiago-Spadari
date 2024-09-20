@@ -16,7 +16,7 @@ import laravelIcon from '../../public/laravel.png'
 import phpIcon from '../../public/php.png'
 import reactIcon from '../../public/react.png'
 import nodeJs from '../../public/NODEJS.jpg'
-import imoogiImage from '../../public/Projeto IMOOGI.png'
+import imoogiImage from '../../public/Nova imoogi.png'
 import imoogiImageAncient from '../../public/projeto antigo imoogi.png'
 import portifolioImage from '../../public/portifolio-image.png'
 import { ProjectCard } from "@/components/projectCard";
@@ -84,8 +84,7 @@ export default function Home() {
 
           <ProjectCard projectImage={imoogiImage} technologies={[{ src: typescriptIcon }, { src: nextJsIcon }, { src: phpIcon },
           { src: laravelIcon }]} title="Site + Sistema de Administração" company=" Empresarial - ACADEMIAS IMOOGI" description=" Responsável por criar e realizar a manutenção do site/sistema de administração da empresa em ambas as vertentes, front-end e back-end utilizando ferramentas como NextJS/TypeScript e PHP/Laravel.
-              Com esse projeto, foi possível realizar gerenciamento envolvendo planos, usuários, modalidades, aulas, sistema de agendamento e unidades da empresa, como também um painel do aluno cercado por um sistema de autenticação. No lado não-autenticado, está um site institucional voltado para divulgação da empresa.
-" githubLink1="https://github.com/spadaritucks/ACADEMIAS-IMOOGI---FRONT-END-NEXTJS"
+              Com esse projeto, foi possível realizar gerenciamento envolvendo planos, usuários, modalidades, aulas, sistema de agendamento e unidades da empresa, como também um painel do aluno cercado por um sistema de autenticação. No lado não-autenticado, está um site institucional voltado para divulgação da empresa." githubLink1="https://github.com/spadaritucks/ACADEMIAS-IMOOGI---FRONT-END-NEXTJS"
             githubLink2="https://github.com/spadaritucks/ACADEMIAS-IMOOGI---BACK-END---LARAVEL-PHP" projectLink="https://academiasimoogi.com.br"
           />
 

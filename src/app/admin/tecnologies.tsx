@@ -12,6 +12,7 @@ import postgresIcon from '@/../public/postgreSQLIcon.png';
 import mysqlIcon from '@/../public/mysql-logo.svg';
 import prismaIcon from '@/../public/prismaIcon.png';
 import javaIcon from '@/../public/JavaIcon.png';
+import angularIcon from '@/../public/AngularIcon.png';
 
 
 export const Tecnologies = [
@@ -60,4 +61,9 @@ export const Tecnologies = [
         tecnologia: "Prisma",
         filename: prismaIcon
     },
+    {
+        tecnologia: "Angular",
+        filename: angularIcon
+    },
+    
 ]

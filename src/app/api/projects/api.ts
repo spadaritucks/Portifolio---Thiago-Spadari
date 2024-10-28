@@ -78,13 +78,14 @@ export async function UPDATE(id: number, formData: FormData) {
             projectImagePath = `/uploads/${uniqueFileName}`; // Define o caminho da imagem
         }
 
+        // Atualiza o projeto, incluindo project_image apenas se uma nova imagem foi enviada
         const updatedProject = await prisma.projetos.update({
             where: {
                 id: id,
             },
             data: {
                 title: formData.get('title') as string,
-                project_image: projectImagePath, // Atualiza apenas se a imagem foi enviada
+                project_image: projectImagePath ? projectImagePath : undefined, // Atualiza apenas se projectImagePath não for nulo
                 company: formData.get('company') as string,
                 description: formData.get('description') as string,
                 git_link_1: formData.get('git_link_1') as string,

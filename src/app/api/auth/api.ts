@@ -28,8 +28,7 @@ export const LoginAPI = async (email: string, password: string) => {
         return {
             status: 401,
             message: 'Email ou senha inválidos',
-            email: user?.email,
-            password: user?.password
+            
         }
     }
 

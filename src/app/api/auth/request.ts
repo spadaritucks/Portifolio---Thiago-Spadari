@@ -12,8 +12,7 @@ export const handleLogin = async (email: string, password: string) => {
             message: response.message,
             token: response.token,
             user: response.user,
-            email: response.email,
-            password: response.password
+          
          }
         
     }catch(error: any){

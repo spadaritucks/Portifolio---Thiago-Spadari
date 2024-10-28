@@ -1,0 +1,33 @@
+.input-wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.input-wrapper-checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.input-wrapper label{
+    font-size: 12px;
+}
+
+
+.input-wrapper input{
+    padding: 8px 10px;
+    width: 220px;
+    color: white;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+  
+    
+}
+
+.input-wrapper input:focus{
+    outline: none;
+}

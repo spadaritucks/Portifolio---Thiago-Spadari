@@ -23,6 +23,7 @@ export default function Navbar() {
                 <Link href='#menu'>Menu</Link>
                 <Link href='#sobre-min-area'>Sobre mim</Link>
                 <Link href='#project-section'>Projetos</Link>
+                <Link href='/login'>Login</Link>
             </div>
             <div className="hamburguer-area">
                 {!open ? <MenuSharpIcon className="hamburguer-style" style={{cursor: 'pointer', transition: '1s ease-in', fontSize: '50px' }} onClick={toogleDropdown} /> 

@@ -1,0 +1,123 @@
+.main-projetos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 20px;
+}
+
+.main-projetos h1{
+    margin: 20px;
+}
+
+.main-projetos form{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    place-items: center;
+}
+
+.main-projetos form button{
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(64, 64, 172);
+    color: white;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.main-projetos form button:hover{
+    background-color: rgb(13, 13, 80);
+}
+
+
+.checkboxes-content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  
+}
+
+.project-operations{
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    overflow: auto;
+}
+
+
+button{
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(64, 64, 172);
+    color: white;
+    border-radius: 8px;
+}
+
+button:hover{
+    background-color: rgb(13, 13, 80);
+}
+
+button:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.project-table{
+    overflow: auto;
+    border-spacing: 15px;
+    font-size: 14px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    
+
+}
+
+.project-table th{
+    font-weight: bold;
+}
+
+.project-table th, td{
+    border-bottom: 1px solid #ccc;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    gap: 20px; 
+    height: 40px;
+    width: 400px;
+   
+}
+
+
+.table-links{
+    color: white;
+}
+
+
+.action-table-buttons button{
+    margin-top: 5px;
+}
+
+
+
+
+@media (max-width: 990px) {
+    .main-projetos form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .checkboxes-content{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+
+

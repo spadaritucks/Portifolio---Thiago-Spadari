@@ -7,24 +7,24 @@ import githubIcon from '../../public/github.png'
 import Link from 'next/link';
 
 interface ProjectCardProps {
-    projectImage: StaticImageData;
-    technologies: { src: StaticImageData; }[];
+    projectImage: string | null;
+    technologies: { src: string; }[];
     title: string;
     company: string;
     description: string;
     githubLink1: string;
-    githubLink2?: string;
-    projectLink?: string
+    githubLink2?: string | null;
+    projectLink?: string | null;
 }
 
 
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ projectImage, technologies, title, company, description, githubLink1,githubLink2, projectLink }) => {
     return <div className="project-card">
-        <Image src={projectImage} alt="" className="project-image"></Image>
+        {projectImage ? <Image src={projectImage} alt="" className="project-image" width={400} height={200}></Image> : null}
         <div className="project-tecnology">
             {technologies.map((tech, index) => (
-                <Image key={index} src={tech.src} className="project-tech-icon" alt='' />
+                <Image key={index} src={tech.src} className="project-tech-icon" alt='' width={40} height={40} />
             ))}
         </div>
         <h2 className="project-title">{title}</h2>

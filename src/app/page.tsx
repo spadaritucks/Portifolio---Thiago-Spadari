@@ -1,4 +1,4 @@
-'use client'
+'use server'
 import Image from "next/image";
 import '@/app/home.css'
 import { MainLayout } from "@/layouts/mainLayout";
@@ -21,12 +21,20 @@ import imoogiImageAncient from '../../public/projeto antigo imoogi.png'
 import portifolioImage from '../../public/portifolio-image.png'
 import { ProjectCard } from "@/components/projectCard";
 import { useState } from "react";
+import { getProjects } from "./api/projects/request";
 
 
 
 
 
-export default function Home() {
+export default async function Home() {
+
+  const response = await getProjects();
+  const projects = response.projetos || [];
+  const technologies = response.technologies || [];
+
+
+
 
 
   return (
@@ -77,25 +85,21 @@ export default function Home() {
       <section className="project-section" id="project-section">
         <h1>Meus Projetos</h1>
         <div className="project-container">
-          <ProjectCard projectImage={portifolioImage} technologies={[{ src: typescriptIcon }, { src: nextJsIcon }]} title="Portifolio - Thiago Spadari"
-            company="Pessoal - Portifolio Divulgação" description="Meu portifolio foi feito para divulgar o meu trabalho e minhas competencias, más tambem para despertar interesse
-              do publico" githubLink1="https://github.com/spadaritucks/Portifolio---Thiago-Spadari" projectLink="https://portifolio-thiago-spadari.vercel.app" />
-
-
-          <ProjectCard projectImage={imoogiImage} technologies={[{ src: typescriptIcon }, { src: nextJsIcon }, { src: phpIcon },
-          { src: laravelIcon }]} title="Site + Sistema de Administração" company=" Empresarial - ACADEMIAS IMOOGI" description=" Responsável por criar e realizar a manutenção do site/sistema de administração da empresa em ambas as vertentes, front-end e back-end utilizando ferramentas como NextJS/TypeScript e PHP/Laravel.
-              Com esse projeto, foi possível realizar gerenciamento envolvendo planos, usuários, modalidades, aulas, sistema de agendamento e unidades da empresa, como também um painel do aluno cercado por um sistema de autenticação. No lado não-autenticado, está um site institucional voltado para divulgação da empresa." githubLink1="https://github.com/spadaritucks/ACADEMIAS-IMOOGI---FRONT-END-NEXTJS"
-            githubLink2="https://github.com/spadaritucks/ACADEMIAS-IMOOGI---BACK-END---LARAVEL-PHP" projectLink="https://academiasimoogi.com.br"
-          />
-
-          <ProjectCard projectImage={imoogiImageAncient} technologies={[{ src: htmlIcon }, { src: cssIcon }, { src: javascriptIcon }, { src: phpIcon }]} title="Site + Sistema de Administração (Versão Antiga)"
-            company="Empresarial - ACADEMIAS IMOOGI" description="Esse projeto trata-se da versão antiga do projeto Site + Sistema de Administração das ACADEMIAS IMOOGI, que foi inicialmente
-          feito em HTML,CSS E Javascript no front-end e PHP no Back-end bem como o uso do AJAX para fazer as requisições HTTP para o servidor. Esse Projeto sofreu uma migração para as ferramentas
-          NextJS/Typescript e PHP/Laravel e uma refatoração em toda sua estrutura, corrigindo problemas da versão anterior, e deixando o codigo mais limpo e pratico para reutilização e 
-          manuntenções futuras" githubLink1="https://github.com/spadaritucks/Site-System-AcademiasIMOOGI---Version-1.0" />
-
-
-
+          {projects.map((project) => {
+            const technologiesFilter = technologies.filter(tech => tech.project_id === project.id);
+            return (
+              <ProjectCard 
+                projectImage={project.project_image} 
+                technologies={technologiesFilter.map(tech => ({ src: tech.technologies }))} 
+                title={project.title} 
+                company={project.company} 
+                description={project.description} 
+                githubLink1={project.git_link_1}
+                githubLink2={project.git_link_2} 
+                projectLink={project.project_link}
+              />
+            )
+          })}
         </div>
       </section>
     </MainLayout>

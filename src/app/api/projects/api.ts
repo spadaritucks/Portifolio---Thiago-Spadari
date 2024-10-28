@@ -58,19 +58,25 @@ export async function POST(formData: FormData) {
 
 export async function UPDATE(id: number, formData: FormData) {
     try {
-        // Processa o upload da imagem
+        const uploadDir = path.resolve('public/uploads'); // Diretório de upload
+        let projectImagePath: string | null = null; // Inicializa como nulo
+
+        // Verifica se a imagem foi enviada
         const projectImage = formData.get('project_image') as File;
-        const uploadDir = path.resolve('public/uploads'); // Mudei para 'public/uploads'
-        const timePath = Date.now();
-        const uniqueFileName = `${timePath}_${projectImage.name}`;
-        const uploadPath = path.join(uploadDir, uniqueFileName);
+        if (projectImage) {
+            const timePath = Date.now();
+            const uniqueFileName = `${timePath}_${projectImage.name}`;
+            const uploadPath = path.join(uploadDir, uniqueFileName);
 
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, { recursive: true });
+            }
+
+            const buffer = await projectImage.arrayBuffer();
+            fs.writeFileSync(uploadPath, Buffer.from(buffer));
+
+            projectImagePath = `/uploads/${uniqueFileName}`; // Define o caminho da imagem
         }
-
-        const buffer = await projectImage.arrayBuffer();
-        fs.writeFileSync(uploadPath, Buffer.from(buffer));
 
         const updatedProject = await prisma.projetos.update({
             where: {
@@ -78,7 +84,7 @@ export async function UPDATE(id: number, formData: FormData) {
             },
             data: {
                 title: formData.get('title') as string,
-                project_image: `/uploads/${uniqueFileName}` || null, // Armazenando caminho relativo
+                project_image: projectImagePath, // Atualiza apenas se a imagem foi enviada
                 company: formData.get('company') as string,
                 description: formData.get('description') as string,
                 git_link_1: formData.get('git_link_1') as string,
@@ -90,6 +96,7 @@ export async function UPDATE(id: number, formData: FormData) {
                 }
             }
         });
+
         return { status: true, message: "Projeto atualizado com sucesso ", project: updatedProject };
     } catch (error: any) {
         return { status: false, message: "Falha ao atualizar o projeto : " + error.message };

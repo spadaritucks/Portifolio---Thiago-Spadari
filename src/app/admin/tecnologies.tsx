@@ -8,6 +8,11 @@ import reactIcon from '@/../public/react.png';
 import nextjsIcon from '@/../public/nextjs.png';
 import phpIcon from '@/../public/php.png';
 import laravelIcon from '@/../public/laravel.png';
+import postgresIcon from '@/../public/postgreSQLIcon.png';
+import mysqlIcon from '@/../public/mysql-logo.svg';
+import prismaIcon from '@/../public/prismaIcon.png';
+import javaIcon from '@/../public/JavaIcon.png';
+
 
 export const Tecnologies = [
     {
@@ -41,5 +46,18 @@ export const Tecnologies = [
     {
         tecnologia: "Laravel",
         filename: laravelIcon
+    },
+    {
+        tecnologia: "Java",
+        filename: javaIcon
+    },    {
+        tecnologia: "PostgreSQL",
+        filename: postgresIcon
+    },    {
+        tecnologia: "MySQL",
+        filename: mysqlIcon
+    },    {
+        tecnologia: "Prisma",
+        filename: prismaIcon
     },
 ]

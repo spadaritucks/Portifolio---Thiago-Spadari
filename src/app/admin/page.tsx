@@ -104,11 +104,11 @@ export default function Admin() {
 
             console.log(formdata)
             const response = await createProject(formdata)
-            setModalResponse(true)
-            if (response && response.project) {
-                setProjects(prev => [...prev, response.project]);
-                if (modalResponse) {
-                    ModalResponse({status: response.status, message: response.message, project: response.project})
+            if (response) {
+                if (response.status === false) {
+                    alert(response.message)
+                } else {
+                    alert(response.message)
                 }
             }
 
@@ -124,11 +124,11 @@ export default function Admin() {
                 const formdata = new FormData(formRef.current)
 
                 const response = await updateProject(projectId, formdata)
-                setModalResponse(true)
-                if (response && response.project) {
-                    setProjects(prev => [...prev, response.project]);
-                    if (modalResponse) {
-                        ModalResponse({status: response.status, message: response.message, project: response.project})
+                if (response) {
+                    if (response.status === false) {
+                        alert(response.message)
+                    } else {
+                        alert(response.message)
                     }
                 }
             }
@@ -161,8 +161,12 @@ export default function Admin() {
     const handleDeleteSubmit = async (id: number) => {
 
         const response = await deleteProject(id)
-        if (response && response.project) {
-            setProjects(prev => [...prev, response.project]);
+        if (response) {
+            if (response.status === false) {
+                alert(response.message)
+            } else {
+                alert(response.message)
+            }
         }
 
     }

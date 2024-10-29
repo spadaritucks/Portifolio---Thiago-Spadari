@@ -18,6 +18,9 @@ import reactIcon from '../../public/react.png'
 import nodeJs from '../../public/NODEJS.jpg'
 import javaIcon from '@/../public/JavaIcon.png';
 import angularIcon from '@/../public/AngularIcon.png';
+import postgresIcon from '@/../public/postgreSQLIcon.png';
+import mysqlIcon from '@/../public/mysql-logo.svg';
+import prismaIcon from '@/../public/prismaIcon.png';
 import imoogiImage from '../../public/Nova imoogi.png'
 import imoogiImageAncient from '../../public/projeto antigo imoogi.png'
 import portifolioImage from '../../public/portifolio-image.png'
@@ -78,6 +81,9 @@ export default async function Home() {
               <Image src={laravelIcon} className="tecnology-icon" alt="" ></Image>
               <Image src={javaIcon} className="tecnology-icon" alt="" ></Image>
               <Image src={angularIcon} className="tecnology-icon" alt="" ></Image>
+              <Image src={postgresIcon} className="tecnology-icon" alt="" ></Image>
+              <Image src={mysqlIcon} className="tecnology-icon" alt="" ></Image>
+              <Image src={prismaIcon} className="tecnology-icon" alt="" ></Image>
             </div>
           </div>
           <div className="competencias">

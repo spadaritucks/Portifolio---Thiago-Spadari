@@ -16,10 +16,10 @@ datasource db {
 model Projetos {
   id            Int                     @id @default(autoincrement())
   project_image String?
-  title         String                  @db.VarChar(50)
+  title         String                  @db.VarChar(100)
   company       String                  @db.VarChar(50)
   description   String
-  git_link_1    String
+  git_link_1    String?
   git_link_2    String?
   project_link  String?
   projetos      Projetos_Technologies[]

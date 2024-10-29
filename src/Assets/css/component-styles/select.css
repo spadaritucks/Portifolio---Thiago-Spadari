@@ -1,0 +1,34 @@
+.select-wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.select-wrapper-checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.select-wrapper label{
+    font-size: 12px;
+}
+
+
+.select-wrapper select{
+    padding: 8px 10px;
+    width: 220px;
+    color: white;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+  
+    
+}
+
+.select-wrapper select:focus{
+    outline: none;
+    background-color: rgb(38, 35, 35);;
+}

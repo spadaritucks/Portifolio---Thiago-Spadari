@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Projetos" ALTER COLUMN "title" SET DATA TYPE VARCHAR(100),
+ALTER COLUMN "git_link_1" DROP NOT NULL;

@@ -9,6 +9,7 @@ import { createProject, deleteProject, getProjects, updateProject } from '../api
 import Link from 'next/link'
 import { createUser, deleteUser, getUsers, updateUser } from '../api/users/request'
 import { UserProps } from '../api/users/api'
+import Select from '@/components/select'
 
 
 
@@ -18,7 +19,7 @@ interface ProjectsProps {
     project_image: string | null;
     company: string;
     description: string;
-    git_link_1: string;
+    git_link_1: string | null;
     git_link_2: string | null; // Permite null
     project_link: string | null; // Permite null
 }
@@ -52,6 +53,8 @@ export default function Admin() {
     const [technologies, setTechnologies] = useState<ProjetosTechnologies[]>([])
     const formRef = useRef<HTMLFormElement>(null)
     const [users, setUsers] = useState<UserProps[]>([])
+
+    const modalOpen = modalCreateProjectOpen || modalUpdateProjectOpen || modalCreateUserOpen || modalUpdateUserOpen || modalDescription 
 
 
     const handleCreateProjectModal = () => {
@@ -194,7 +197,7 @@ export default function Admin() {
             (form['title'] as unknown as HTMLInputElement).value = project.title.toString();
             (form['company'] as unknown as HTMLInputElement).value = project.company.toString();
             (form['description'] as unknown as HTMLInputElement).value = project.description.toString();
-            (form['git_link_1'] as unknown as HTMLInputElement).value = project.git_link_1.toString();
+            project.git_link_1 ? (form['git_link_1'] as unknown as HTMLInputElement).value = project.git_link_1.toString() : ""
             project.git_link_2 ? (form['git_link_2'] as unknown as HTMLInputElement).value = project.git_link_2.toString() : ""
             project.project_link ? (form['project_link'] as unknown as HTMLInputElement).value = project.project_link.toString() : ""
 
@@ -286,7 +289,10 @@ export default function Admin() {
                     </div>
                     <Input label='Imagem do Projeto' type='file' name='project_image' />
                     <Input label='Titulo do Projeto' type='text' name='title' />
-                    <Input label='Cliente' type='text' name='company' />
+                    <Select label='Tipo de Projeto' name='company'>
+                        <option value="Empresarial">Empresarial</option>
+                        <option value="Pessoal">Pessoal</option>
+                    </Select>
                     <Input label='Descrição do Projeto' type='text' name='description' />
                     <Input label='Link Repositorio GIT' type='text' name='git_link_1' />
                     <Input label='Link Repositorio GIT 2 (Opcional)' type='text' name='git_link_2' />
@@ -323,7 +329,7 @@ export default function Admin() {
 
             <div className="project-operations">
                 <div className="operation-buttons">
-                    <button type='button' onClick={handleCreateProjectModal} disabled={modalUpdateProjectOpen || modalCreateProjectOpen} >Adicionar Projeto</button>
+                    <button type='button' onClick={handleCreateProjectModal} disabled={modalOpen}>Adicionar Projeto</button>
                     <button type='button' onClick={handleLogout}>Sair</button>
                 </div>
                 {modalUpdateProjectOpen &&
@@ -363,17 +369,17 @@ export default function Admin() {
                                 </td>
                                 <td>{project.title}</td>
                                 <td>{project.company}</td>
-                                <td ><button onClick={() => handleDescriptionModal(project.id)} disabled={modalDescription}>Exibir Descrição</button>
+                                <td ><button onClick={() => handleDescriptionModal(project.id)} disabled={modalOpen}>Exibir Descrição</button>
                                     {modalDescription && <Modal title="Descrição" children={<p>{projectDescription?.description}</p>}
                                         modalOpen={modalDescription}
                                         modalClose={() => setDescription(false)} />}
                                 </td>
-                                <td><Link href={project.git_link_1} className='table-links'>Link Repositorio GIT</Link></td>
+                                <td><Link href={project?.git_link_1 || ''} className='table-links'>Link Repositorio GIT</Link></td>
                                 <td>{project.git_link_2 ? <Link href={project.git_link_2} className='table-links'>Link Repositorio GIT(2)</Link> : <p>N/A</p>}</td>
                                 <td>{project.project_link ? <Link href={project.project_link} className='table-links'>Link Projeto</Link> : <p>N/A</p>}</td>
                                 <td className='action-table-buttons'>
-                                    <button onClick={() => handleUpdateProjectModal(project.id)} disabled={modalUpdateProjectOpen || modalCreateProjectOpen || modalDescription}>Editar</button>
-                                    <button onClick={() => handleSubmitDeleteProject(project.id)} disabled={modalUpdateProjectOpen || modalCreateProjectOpen || modalDescription}>Excluir</button>
+                                    <button onClick={() => handleUpdateProjectModal(project.id)} disabled={modalOpen}>Editar</button>
+                                    <button onClick={() => handleSubmitDeleteProject(project.id)} disabled={modalOpen}>Excluir</button>
                                 </td>
                             </tr>
                         ))}
@@ -411,9 +417,9 @@ export default function Admin() {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td className='action-table-buttons'>
-                                    <button onClick={() => handleCreateUserModal()}>Criar</button>
-                                    <button onClick={() => handleUpdateUserModal(user.id)} disabled={modalUpdateUserOpen || modalCreateUserOpen ||  modalDescription || modalCreateProjectOpen}>Editar</button>
-                                    <button onClick={() => handleSubmitDeleteUser(user.id)} disabled={modalUpdateUserOpen || modalCreateUserOpen || modalDescription || modalCreateProjectOpen }>Excluir</button>
+                                    <button onClick={() => handleCreateUserModal()} disabled={modalOpen}>Criar</button>
+                                    <button onClick={() => handleUpdateUserModal(user.id)} disabled={modalOpen}>Editar</button>
+                                    <button onClick={() => handleSubmitDeleteUser(user.id)} disabled={modalOpen}>Excluir</button>
                                 </td>
                             </tr>
                         ))}

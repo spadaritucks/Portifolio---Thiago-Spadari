@@ -35,6 +35,12 @@ export default async function Home() {
   const projects = response.projetos || [];
   const technologies = response.technologies || [];
 
+  const projectOrder = projects.sort((a, b) => {
+    if (a.company === 'Empresarial' && b.company !== 'Empresarial') return -1; // 'a' vem primeiro
+    if (a.company !== 'Empresarial' && b.company === 'Empresarial') return 1;  // 'b' vem primeiro
+    return 0; // mantém a ordem original se ambos forem iguais
+  });
+
 
 
 
@@ -89,7 +95,7 @@ export default async function Home() {
       <section className="project-section" id="project-section">
         <h1>Meus Projetos</h1>
         <div className="project-container">
-          {projects.map((project) => {
+          {projectOrder.map((project) => {
             const technologiesFilter = technologies.filter(tech => tech.project_id === project.id);
             return (
               <ProjectCard 
@@ -98,8 +104,8 @@ export default async function Home() {
                 title={project.title} 
                 company={project.company} 
                 description={project.description} 
-                githubLink1={project.git_link_1}
-                githubLink2={project.git_link_2} 
+                githubLink1={project.git_link_1 || ''}
+                githubLink2={project.git_link_2 || ''} 
                 projectLink={project.project_link}
               />
             )

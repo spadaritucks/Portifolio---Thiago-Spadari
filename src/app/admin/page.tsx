@@ -7,6 +7,9 @@ import { Tecnologies } from './tecnologies'
 import Image from 'next/image'
 import { createProject, deleteProject, getProjects, updateProject } from '../api/projects/request'
 import Link from 'next/link'
+import { createUser, deleteUser, getUsers, updateUser } from '../api/users/request'
+import { UserProps } from '../api/users/api'
+
 
 
 interface ProjectsProps {
@@ -28,25 +31,47 @@ interface ProjetosTechnologies {
 }
 interface FormProps {
     functionSubmit?: (e: React.FormEvent<HTMLFormElement>) => Promise<void> | void;
-    handleValueInput: () => void
-
+    handleInputValueProject?: () => void
+    handleInputValueUser?: () => void
 }
+
 
 export default function Admin() {
 
+
+
     const [modalCreateProjectOpen, setModalCreateProjectOpen] = useState<boolean>(false)
     const [modalUpdateProjectOpen, setModalUpdateProjectOpen] = useState<boolean>(false)
+    const [modalCreateUserOpen, setModalCreateUserOpen] = useState<boolean>(false)
+    const [modalUpdateUserOpen, setModalUpdateUserOpen] = useState<boolean>(false)
     const [modalDescription, setDescription] = useState<boolean>(false)
     const [modalResponse, setModalResponse] = useState<boolean>(false)
     const [projects, setProjects] = useState<ProjectsProps[]>([])
     const [projectId, setProjectId] = useState<number>();
+    const [userId, setUserId] = useState<number>();
     const [technologies, setTechnologies] = useState<ProjetosTechnologies[]>([])
     const formRef = useRef<HTMLFormElement>(null)
+    const [users, setUsers] = useState<UserProps[]>([])
+
 
     const handleCreateProjectModal = () => {
         setModalCreateProjectOpen(true)
         setModalUpdateProjectOpen(false)
     }
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('token')
+        if (!token) {
+            window.location.href = '/login'
+        }
+    }, [])
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('token')
+        window.location.href = '/login'
+    }
+
+
 
 
     const handleUpdateProjectModal = (id: number) => {
@@ -65,19 +90,29 @@ export default function Admin() {
         setProjectId(id)
     }
 
-
-    const ModalResponse = (response: { status: boolean, message: string, project: {} }) => {
-        return (
-            <Modal title='Mensagem' children={<p>{response.message}</p>} modalOpen={modalResponse} modalClose={() => setModalResponse(false)} />
-        )
+    const handleCreateUserModal = () => {
+        setModalCreateUserOpen(true)
+        setModalUpdateUserOpen(false)
     }
+
+    const handleUpdateUserModal = (id: number) => {
+        if (modalCreateUserOpen && userId === id) {
+            return;
+        }
+        setUserId(id)
+        setModalUpdateUserOpen(true)
+        setModalCreateUserOpen(false)
+    }
+
+
+
 
     const projectDescription = projects.find(project => project.id === projectId) //Responsavel por filtar a descrição para abertura da modal
 
 
     useEffect(() => {
         if (projectId && modalUpdateProjectOpen) {
-            handleValueInput();
+            handleInputValueProject();
         }
     }, [projectId]);
 
@@ -93,11 +128,20 @@ export default function Admin() {
         }
         fetchProjects()
 
+        const fetchUsers = async () => {
+            const response = await getUsers()
+            if (response) {
+                setUsers(response.users || [])
+            } else {
+                setUsers([])
+            }
+        }
+        fetchUsers()
 
     }, [])
 
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitProject = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (formRef.current) {
             const formdata = new FormData(formRef.current)
@@ -115,7 +159,7 @@ export default function Admin() {
         }
     }
 
-    const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitUpdateProject = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if (projectId) {
@@ -136,7 +180,7 @@ export default function Admin() {
 
     }
 
-    const handleValueInput = () => {
+    const handleInputValueProject = () => {
         const form = formRef.current
         const project = projects.find(project => project.id === projectId)
 
@@ -158,7 +202,7 @@ export default function Admin() {
     }
 
 
-    const handleDeleteSubmit = async (id: number) => {
+    const handleSubmitDeleteProject = async (id: number) => {
 
         const response = await deleteProject(id)
         if (response) {
@@ -171,11 +215,64 @@ export default function Admin() {
 
     }
 
+    const handleSubmitCreateUser = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        
+        if(formRef.current){
+            const formdata = new FormData(formRef.current)
+            const response = await createUser(formdata)
+            if(response){
+                if(response.status === false){
+                    alert(response.message)
+                }else{
+                    alert(response.message)
+                }
+            }
+        }
+    }
+
+    const handleSubmitUpdateUser = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if(userId){
+            if(formRef.current){
+                const formdata = new FormData(formRef.current)
+                const response = await updateUser(userId, formdata)
+                if(response){
+                    if(response.status === false){
+                        alert(response.message)
+                    }else{
+                        alert(response.message)
+                    }
+                }
+            }
+        }
+    }  
+
+    const handleSubmitDeleteUser = async (id: number) => {
+        const response = await deleteUser(id)
+        if(response){
+            if(response.status === false){
+                alert(response.message)
+            }else{
+                alert(response.message)
+            }
+        }
+    }
+
+    const handleInputValueUser = () => {
+        const form = formRef.current
+        const user = users.find(user => user.id === userId)
+        if(user && form){
+            (form['name'] as unknown as HTMLInputElement).value = user.name.toString();
+            (form['email'] as unknown as HTMLInputElement).value = user.email.toString();
+        }
+    }
 
 
 
 
-    const ProjectForm = ({ functionSubmit, handleValueInput }: FormProps) => {
+
+    const ProjectForm = ({ functionSubmit, handleInputValueProject }: FormProps) => {
 
 
         if (functionSubmit) {
@@ -201,22 +298,38 @@ export default function Admin() {
         }
     }
 
+    const UserForm = ({ functionSubmit, handleInputValueUser }: FormProps) => {
+        if (functionSubmit) {
+            return (
+                <form onSubmit={functionSubmit} ref={formRef}>
+                    <Input label='Nome do Usuario' type='text' name='name' />
+                    <Input label='Email do Usuario' type='email' name='email' />
+                    <Input label='Senha do Usuario' type='password' name='password' />
+                    <button type='submit' style={{ gridColumn: '1 / -1' }}>Enviar</button>
+                </form>
+            )
+        }
+    }
+
     return (
         <section className="main-projetos">
             <h1>Gerenciador de Projetos</h1>
             {modalCreateProjectOpen &&
                 <Modal title="Criar Projeto"
-                    children={<ProjectForm handleValueInput={handleValueInput}
-                        functionSubmit={handleSubmit} />}
+                    children={<ProjectForm handleInputValueProject={handleInputValueProject}
+                        functionSubmit={handleSubmitProject} />}
                     modalOpen={modalCreateProjectOpen}
                     modalClose={() => setModalCreateProjectOpen(false)} />}
 
             <div className="project-operations">
-                <button type='button' onClick={handleCreateProjectModal} disabled={modalUpdateProjectOpen || modalCreateProjectOpen} >Adicionar Projeto</button>
+                <div className="operation-buttons">
+                    <button type='button' onClick={handleCreateProjectModal} disabled={modalUpdateProjectOpen || modalCreateProjectOpen} >Adicionar Projeto</button>
+                    <button type='button' onClick={handleLogout}>Sair</button>
+                </div>
                 {modalUpdateProjectOpen &&
                     <Modal title="Editar Projeto" children={<ProjectForm
-                        handleValueInput={handleValueInput}
-                        functionSubmit={(e) => handleUpdateSubmit(e)} />}
+                        handleInputValueProject={handleInputValueProject}
+                        functionSubmit={(e) => handleSubmitUpdateProject(e)} />}
                         modalOpen={modalUpdateProjectOpen}
                         modalClose={() => setModalUpdateProjectOpen(false)} />}
 
@@ -242,7 +355,7 @@ export default function Admin() {
                             <tr key={project.id}>
 
                                 <td>{project.id}</td>
-                                {project.project_image ? <td><Image alt='' width={150} height={50} src={project.project_image} /></td> : null}
+                                {project.project_image ? <td><Image alt='' width={100} height={50} src={project.project_image} /></td> : null}
                                 <td>
                                     {technologies.filter(tech => tech.project_id === project.id).map(tech => (
                                         <Image alt='' width={30} height={30} src={tech.technologies}></Image>
@@ -260,7 +373,47 @@ export default function Admin() {
                                 <td>{project.project_link ? <Link href={project.project_link} className='table-links'>Link Projeto</Link> : <p>N/A</p>}</td>
                                 <td className='action-table-buttons'>
                                     <button onClick={() => handleUpdateProjectModal(project.id)} disabled={modalUpdateProjectOpen || modalCreateProjectOpen || modalDescription}>Editar</button>
-                                    <button onClick={() => handleDeleteSubmit(project.id)} disabled={modalUpdateProjectOpen || modalCreateProjectOpen || modalDescription}>Excluir</button>
+                                    <button onClick={() => handleSubmitDeleteProject(project.id)} disabled={modalUpdateProjectOpen || modalCreateProjectOpen || modalDescription}>Excluir</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <div className='main-users'>
+                {modalCreateUserOpen &&
+                    <Modal title="Criar Usuario" children={<UserForm handleInputValueUser={handleInputValueUser} functionSubmit={handleSubmitCreateUser} />}
+                        modalOpen={modalCreateUserOpen}
+                        modalClose={() => setModalCreateUserOpen(false)} />}
+
+                {modalUpdateUserOpen &&
+                    <Modal title="Editar Usuario" children={<UserForm handleInputValueUser={handleInputValueUser} functionSubmit={handleSubmitUpdateUser} />}
+                        modalOpen={modalUpdateUserOpen}
+                        modalClose={() => setModalUpdateUserOpen(false)} />}
+
+                <h2>Painel de Usuarios</h2>
+                <table className='users-table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome do Usuario</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td className='action-table-buttons'>
+                                    <button onClick={() => handleCreateUserModal()}>Criar</button>
+                                    <button onClick={() => handleUpdateUserModal(user.id)} disabled={modalUpdateUserOpen || modalCreateUserOpen ||  modalDescription || modalCreateProjectOpen}>Editar</button>
+                                    <button onClick={() => handleSubmitDeleteUser(user.id)} disabled={modalUpdateUserOpen || modalCreateUserOpen || modalDescription || modalCreateProjectOpen }>Excluir</button>
                                 </td>
                             </tr>
                         ))}

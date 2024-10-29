@@ -16,6 +16,8 @@ import laravelIcon from '../../public/laravel.png'
 import phpIcon from '../../public/php.png'
 import reactIcon from '../../public/react.png'
 import nodeJs from '../../public/NODEJS.jpg'
+import javaIcon from '@/../public/JavaIcon.png';
+import angularIcon from '@/../public/AngularIcon.png';
 import imoogiImage from '../../public/Nova imoogi.png'
 import imoogiImageAncient from '../../public/projeto antigo imoogi.png'
 import portifolioImage from '../../public/portifolio-image.png'
@@ -68,6 +70,8 @@ export default async function Home() {
               <Image src={nextJsIcon} className="tecnology-icon" alt="" ></Image>
               <Image src={phpIcon} className="tecnology-icon" alt="" ></Image>
               <Image src={laravelIcon} className="tecnology-icon" alt="" ></Image>
+              <Image src={javaIcon} className="tecnology-icon" alt="" ></Image>
+              <Image src={angularIcon} className="tecnology-icon" alt="" ></Image>
             </div>
           </div>
           <div className="competencias">

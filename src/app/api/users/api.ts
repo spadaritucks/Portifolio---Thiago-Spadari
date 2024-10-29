@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import bcrypt from 'bcrypt';
 
 
-interface UserProps {
+export interface UserProps {
     id: number;
     name: string;
     email: string;

@@ -18,6 +18,12 @@
     place-items: center;
 }
 
+.operation-buttons{
+    display: flex;
+    gap: 10px;
+}
+
+
 .main-projetos form button{
     padding: 5px 10px;
     border: none;
@@ -67,7 +73,7 @@ button:disabled{
     cursor: not-allowed;
 }
 
-.project-table{
+.project-table, .users-table{
     overflow: auto;
     border-spacing: 15px;
     font-size: 14px;
@@ -77,11 +83,11 @@ button:disabled{
 
 }
 
-.project-table th{
+.project-table th, .users-table th{
     font-weight: bold;
 }
 
-.project-table th, td{
+.project-table th, .users-table th, .project-table td, .users-table td{
     border-bottom: 1px solid #ccc;
     margin: 10px;
     padding: 5px;
@@ -100,6 +106,17 @@ button:disabled{
 
 .action-table-buttons button{
     margin-top: 5px;
+    margin-right: 5px;
+}
+
+.main-users{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    width: 80%;
+    
 }
 
 

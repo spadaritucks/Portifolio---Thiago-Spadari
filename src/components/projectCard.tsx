@@ -32,7 +32,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ projectImage, technolo
         <p className="project-text">{description}</p>
 
         <div className='links-project'>
-            <Link href= {githubLink1}><Image src={githubIcon} width={50} height={50} className="contact-icon" alt=""></Image></Link>
+            {githubLink1 ? <Link href= {githubLink1}><Image src={githubIcon} width={50} height={50} className="contact-icon" alt=""></Image></Link> : ''}
             {githubLink2 ? <Link href= {githubLink2}><Image src={githubIcon} width={50} height={50} className="contact-icon" alt=""></Image></Link> : ''}
             {projectLink ? <Link href= {projectLink}><Image src={linkIcon} width={50} height={50} className="contact-icon" alt=""></Image></Link> : ''}
         </div>

@@ -19,7 +19,7 @@ export const handleLogin = async (email: string, password: string) => {
         // Aqui você pode adicionar um tratamento de erro mais robusto
         return {
             status: false,
-            message: 'Erro ao tentar realizar o login. Tente novamente mais tarde.'
+            message: 'Erro ao tentar realizar o login. Tente novamente mais tarde. ' + error 
         };
     }
 }

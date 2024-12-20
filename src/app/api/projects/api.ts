@@ -23,36 +23,43 @@ export async function POST(formData: FormData) {
     try {
         // Processa o upload da imagem
         const projectImage = formData.get('project_image') as File;
-        const uploadDir = path.resolve('public/uploads'); // Mudei para 'public/uploads'
-        const timePath = Date.now();
-        const uniqueFileName = `${timePath}_${projectImage.name}`;
-        const uploadPath = path.join(uploadDir, uniqueFileName);
-
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+        if (!projectImage) {
+            return { status: false, message: "Imagem do projeto é obrigatória." };
         }
 
-        const buffer = await projectImage.arrayBuffer();
-        fs.writeFileSync(uploadPath, Buffer.from(buffer));
+        const timePath = Date.now();
+        const uniqueFileName = `${timePath}_${projectImage.name}`;
+        const tempUploadDir = '/tmp'; // Diretório temporário em ambiente serverless
+        const tempUploadPath = path.join(tempUploadDir, uniqueFileName);
 
+        // Criação do buffer para salvar no diretório temporário
+        const buffer = await projectImage.arrayBuffer();
+        fs.writeFileSync(tempUploadPath, Buffer.from(buffer));
+
+        // Salvar o caminho relativo da imagem no banco de dados
         const newProject = await prisma.projetos.create({
             data: {
                 title: formData.get('title') as string,
-                project_image: `/uploads/${uniqueFileName}`, // Armazenando caminho relativo
+                project_image: `/uploads/${uniqueFileName}`, // Ajuste para refletir o caminho final após upload permanente
                 company: formData.get('company') as string,
                 description: formData.get('description') as string,
                 git_link_1: formData.get('git_link_1') as string,
                 git_link_2: formData.get('git_link_2') as string,
                 project_link: formData.get('project_link') as string,
                 projetos: {
-                    create: formData.getAll('tecnologies[]').map((tech: FormDataEntryValue) => ({ technologies: tech as string })),
-                }
-            }
+                    create: formData
+                        .getAll('tecnologies[]')
+                        .map((tech: FormDataEntryValue) => ({ technologies: tech as string })),
+                },
+            },
         });
 
-        return { status: true, message: "Projeto criado com sucesso ", project: newProject };
+        // Note: Em ambientes serverless, mova o arquivo do /tmp para um serviço de armazenamento em nuvem
+        // como S3 para armazenamento permanente. Este é apenas um exemplo básico.
+
+        return { status: true, message: "Projeto criado com sucesso", project: newProject };
     } catch (error: any) {
-        return { status: false, message: "Falha ao criar o projeto : " + error.message };
+        return { status: false, message: "Falha ao criar o projeto: " + error.message };
     }
 }
 
